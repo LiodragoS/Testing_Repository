@@ -5,14 +5,14 @@ pygame.init()
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h
 print("""
-Loading t2 from t2.apk
+Loading t3 from t3.apk
     Pygbag Version : 0.9.1
     Template Version : 0.9.0
     Python  : 3.12
     CDN URL : https://pygame-web.github.io/archives/0.9/
     Screen  : {screen_width}x{screen_height}
-    Title   : t2
-    Folder  : t2
+    Title   : t3
+    Folder  : t3
     Authors : pgw
     SPDX-License-Identifier: cookiecutter.spdx
 
@@ -88,12 +88,12 @@ async def custom_site():
 
 
 
-    apk = "t2.apk"
+    apk = "t3.apk"
 
-    bundle = "t2"
+    bundle = "t3"
 
     # the C or js loader could do that but be explicit.
-    appdir = Path(f"/data/data/{bundle}") # /data/data/t2
+    appdir = Path(f"/data/data/{bundle}") # /data/data/t3
     appdir.mkdir()
 
 
@@ -243,7 +243,7 @@ config = {
     user_canvas_managed : 0,
     ume_block : 1,
     can_close : 0,
-    archive : "t2",
+    archive : "t3",
     gui_debug : 3,
     cdn : "https://pygame-web.github.io/archives/0.9/",
     autorun : 0,
@@ -252,7 +252,7 @@ config = {
 
 </script>
 
-    <title>t2</title>
+    <title>t3</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

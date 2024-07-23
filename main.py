@@ -96,8 +96,8 @@ Lifebar_timer_check = True
 Lifebar_timer = 0
 random_box_timer = random.randrange(25000, 40000, 1000)
 
-Normal_Background_Sound = pygame.mixer.Sound("Dragonrace Normal 2.0.mp3")
-Thunder_Background_Sound = pygame.mixer.Sound("Dragonrace Thunder 2.0.mp3")
+#Normal_Background_Sound = pygame.mixer.Sound("Dragonrace Normal 2.0.mp3")
+#Thunder_Background_Sound = pygame.mixer.Sound("Dragonrace Thunder 2.0.mp3")
 
 Dragon_IMAGE_Scaled_allowed = True
 Dragon_IMAGE_Scaled_Left_allowed = True
@@ -590,8 +590,8 @@ restart_text = font_restart_text.render('Restart', True, color_button_restart)
             
 run = True
             
-pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
-pygame.mixer.music.play(-1)
+#pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
+#pygame.mixer.music.play(-1)
 
 async def main():
     global run
@@ -658,22 +658,22 @@ async def main():
         #if 14000 < pygame.time.get_ticks() - start_ticks < 14100:
         #   waiting_for_input = True
 
-        if waiting_for_input:
-           pause_start = pygame.time.get_ticks()
-           pygame.mixer_music.pause()
-           start_waiting_for_input = True
-        else:
-           if start_waiting_for_input == True:
-             pygame.mixer_music.unpause()
-             start_waiting_for_input = False
-        while waiting_for_input:  # With that the game on the website does not load before you interact with it
-            for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-                    paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
-                    start_box_timer = start_box_timer + paused_ticks
-                    paused_ticks_single = pygame.time.get_ticks() - pause_start
-                    last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
-                    waiting_for_input = False
+        #if waiting_for_input:
+        #   pause_start = pygame.time.get_ticks()
+        #   pygame.mixer_music.pause()
+        #   start_waiting_for_input = True
+        #else:
+        #   if start_waiting_for_input == True:
+        #     pygame.mixer_music.unpause()
+        #     start_waiting_for_input = False
+        #while waiting_for_input:  # With that the game on the website does not load before you interact with it
+        #    for event in pygame.event.get():
+        #        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
+        #            paused_ticks = pygame.time.get_ticks() - pause_start + paused_ticks # Takes the ammount of pause time
+        #            start_box_timer = start_box_timer + paused_ticks
+        #            paused_ticks_single = pygame.time.get_ticks() - pause_start
+        #           last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
+        #            waiting_for_input = False
         #print("After_waiting_for_input")
         
         if score_allowed == True:
@@ -700,9 +700,9 @@ async def main():
             else:
                 Jungle_rain = True
                 if music_stop == True:
-                  pygame.mixer.music.stop()
-                  pygame.mixer.music.load("Dragonrace Thunder 2.0.mp3")
-                  pygame.mixer.music.play(-1)
+                  #pygame.mixer.music.stop()
+                  #pygame.mixer.music.load("Dragonrace Thunder 2.0.mp3")
+                  #pygame.mixer.music.play(-1)
                   music_stop = False
                 obstacle_hard_color = True
                 if normal_obstacle_spawn == True:
@@ -911,10 +911,10 @@ async def main():
         for life_box in life_box_group:
             if pygame.sprite.collide_rect(Player, life_box):
                #print("Life_collision_start")
-               item_equip = pygame.mixer.Sound("item equip.mp3")
-               item_equip.set_volume(0.3)
+               #item_equip = pygame.mixer.Sound("item equip.mp3")
+               #item_equip.set_volume(0.3)
                #print("Life_sound_loaded")
-               item_equip.play()
+               #item_equip.play()
                #print("Life_sound_played")
                life_box_group.remove(life_box)
                #print("Life_box_from_group_removed")
@@ -932,9 +932,9 @@ async def main():
          
         for smaller_gap_box in smaller_gap_box_group:
             if pygame.sprite.collide_rect(Player, smaller_gap_box):
-               item_equip = pygame.mixer.Sound("item equip.mp3")
-               item_equip.set_volume(0.3)
-               item_equip.play()
+               #item_equip = pygame.mixer.Sound("item equip.mp3")
+               #item_equip.set_volume(0.3)
+               #item_equip.play()
                smaller_gap_box_group.remove(smaller_gap_box)
                box_claimed_timer = pygame.time.get_ticks()
                normal_obstacle_spawn = False
@@ -957,9 +957,9 @@ async def main():
          
         for bigger_gap_box in bigger_gap_box_group:
             if pygame.sprite.collide_rect(Player, bigger_gap_box):
-               item_equip = pygame.mixer.Sound("item equip.mp3")
-               item_equip.set_volume(0.3)
-               item_equip.play()
+               #item_equip = pygame.mixer.Sound("item equip.mp3")
+               #item_equip.set_volume(0.3)
+               #item_equip.play()
                bigger_gap_box_group.remove(bigger_gap_box)
                box_claimed_timer = pygame.time.get_ticks()
                normal_obstacle_spawn = False
@@ -982,9 +982,9 @@ async def main():
          
         for slow_time_box in slow_time_box_group:
             if pygame.sprite.collide_rect(Player, slow_time_box):
-               item_equip = pygame.mixer.Sound("item equip.mp3")
-               item_equip.set_volume(0.3)
-               item_equip.play()
+               #item_equip = pygame.mixer.Sound("item equip.mp3")
+               #item_equip.set_volume(0.3)
+               #item_equip.play()
                slow_time_box_group.remove(slow_time_box)
                box_claimed_timer = pygame.time.get_ticks()
                slow_time = True
@@ -993,9 +993,9 @@ async def main():
            
         for spikes_box in spikes_box_group:
             if pygame.sprite.collide_rect(Player, spikes_box):
-               item_equip = pygame.mixer.Sound("item equip.mp3")
-               item_equip.set_volume(0.3)
-               item_equip.play()
+               #item_equip = pygame.mixer.Sound("item equip.mp3")
+               #item_equip.set_volume(0.3)
+               #item_equip.play()
                spikes_box_group.remove(spikes_box)
                box_claimed_timer = pygame.time.get_ticks()
                spikes = True
@@ -1152,7 +1152,7 @@ async def main():
                       Player_move = False
                       obstacle_speed = 0
                       obstacle_spawn_time = float('inf')
-                      pygame.mixer.music.stop()
+                      #pygame.mixer.music.stop()
               
                       # Stores the (x,y) coordinates into the variable as a tuple 
                       mouse = pygame.mouse.get_pos() 
@@ -1167,8 +1167,8 @@ async def main():
                             for obstacle in obstacles_right:
                               obstacle.obstacle_right_kill()
                             Player.player_spawn(screen_width / 2 - screen_width * 0.4259 / 2.5 * 0.95 / 0.75, screen_height * 0.75)
-                            pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
-                            pygame.mixer.music.play(-1)
+                            #pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
+                            #pygame.mixer.music.play(-1)
                             music_stop = True
                             score_allowed = True
                             Player_move = True
