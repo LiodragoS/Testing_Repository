@@ -12,7 +12,6 @@ pygame.init()
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360
 screen = pygame.display.set_mode((screen_width, screen_height))
-screen_area = screen_width * screen_height
 Player_Monitor = False
 Obstacle_Monitor = False
 Jungle_IMAGE_Monitor = False
@@ -23,7 +22,7 @@ if screen_width > screen_height:
 gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
 
-print("Scaling_finished")
+#print("Scaling_finished")
 
 start_ticks = pygame.time.get_ticks()
 paused_ticks = 0
@@ -35,44 +34,9 @@ Player_move = True
 score_allowed = True
 highscore_reset = False
 obstacle_hard_color = False
-Player_move_keyboard = True
-music_stop = True
-move_info = True
-storm_info = True
-Jungle_rain = False
-collide_player = False
-Lifebar_3_3 = True
-Lifebar_2_3 = False
-Lifebar_1_3 = False
-Lifebar_0_3 = False
-
-Timebar_5_5 = False
-Timebar_4_5 = False
-Timebar_3_5 = False
-Timebar_2_5 = False
-Timebar_1_5 = False
-Timebar_0_5 = False
-
-slow_time = False
-spikes = False
-Obstacles_allowed = True
-smaller_gap = False
-bigger_gap = False
-first_hit = True
-cooldown = False
-normal_obstacle_spawn = True
-Lifebar_time = 500
-Lifebar_activation_time = True
-Lifebar_timer_check = True
-Lifebar_timer = 0
 
 
-Dragon_IMAGE_Scaled_allowed = True
-Dragon_IMAGE_Scaled_Left_allowed = True
-Dragon_IMAGE_Scaled_Right_allowed = True
-
-
-print("Value_setting_finished")
+#print("Value_setting_finished")
 
 # Dragon images
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
@@ -101,35 +65,6 @@ else:
   neue_breite_rechts = Dragon_IMAGE_Right.get_width() / 2 * screen_width / 2120
   neue_hoehe_rechts = Dragon_IMAGE_Right.get_height() / 2 * screen_width / 2120
 Dragon_IMAGE_Scaled_Right = pygame.transform.scale(Dragon_IMAGE_Right, (neue_breite_rechts, neue_hoehe_rechts))
-
-
-# Dragon shadow images
-Dragon_IMAGE_shadow = pygame.image.load('ALPHA Toothless shadow.png').convert_alpha()
-if Player_Monitor == True:
-  neue_breite_shadow = Dragon_IMAGE_shadow.get_width() / 20 * screen_width / 2120
-  neue_hoehe_shadow = Dragon_IMAGE_shadow.get_height() / 20 * screen_width / 2120
-else:
-  neue_breite_shadow = Dragon_IMAGE_shadow.get_width() / 8 * screen_width / 2120
-  neue_hoehe_shadow = Dragon_IMAGE_shadow.get_height() / 8 * screen_width / 2120
-Dragon_IMAGE_Scaled_shadow = pygame.transform.scale(Dragon_IMAGE_shadow, (neue_breite_shadow, neue_hoehe_shadow))
-
-Dragon_IMAGE_Left_shadow = pygame.image.load('ALPHA Toothless left shadow.png').convert_alpha()
-if Player_Monitor == True:
-  neue_breite_links_shadow = Dragon_IMAGE_Left_shadow.get_width() / 20 * screen_width / 2120
-  neue_hoehe_links_shadow = Dragon_IMAGE_Left_shadow.get_height() / 20 * screen_width / 2120
-else:
-  neue_breite_links_shadow = Dragon_IMAGE_Left_shadow.get_width() / 8 * screen_width / 2120
-  neue_hoehe_links_shadow = Dragon_IMAGE_Left_shadow.get_height() / 8 * screen_width / 2120
-Dragon_IMAGE_Scaled_Left_shadow = pygame.transform.scale(Dragon_IMAGE_Left_shadow, (neue_breite_links_shadow, neue_hoehe_links_shadow))
-
-Dragon_IMAGE_Right_shadow = pygame.image.load('ALPHA Toothless right shadow.png').convert_alpha()
-if Player_Monitor == True:
-  neue_breite_rechts_shadow = Dragon_IMAGE_Right_shadow.get_width() / 20 * screen_width / 2120
-  neue_hoehe_rechts_shadow = Dragon_IMAGE_Right_shadow.get_height() / 20 * screen_width / 2120
-else:
-  neue_breite_rechts_shadow = Dragon_IMAGE_Right_shadow.get_width() / 8 * screen_width / 2120
-  neue_hoehe_rechts_shadow = Dragon_IMAGE_Right_shadow.get_height() / 8 * screen_width / 2120
-Dragon_IMAGE_Scaled_Right_shadow = pygame.transform.scale(Dragon_IMAGE_Right_shadow, (neue_breite_rechts_shadow, neue_hoehe_rechts_shadow))
 
 
 # Jungle images
@@ -170,148 +105,6 @@ else:
   neue_breite_red_Cloud = screen_width
   neue_hoehe_red_Cloud = screen_height
 Red_Cloud_IMAGE_Scaled = pygame.transform.scale(Red_Cloud_IMAGE, (neue_breite_red_Cloud, neue_hoehe_red_Cloud))
-
-# Lifebar images
-Lifebar_3_3_IMAGE = pygame.image.load("Lifebar 3-3 8.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Lifebar_3_3 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Lifebar_3_3 = screen_height / 30 * screen_width / 1920
-else:
-  neue_breite_Lifebar_3_3 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Lifebar_3_3 = screen_height / 15 * screen_width / 1920
-Lifebar_3_3_IMAGE_Scaled = pygame.transform.scale(Lifebar_3_3_IMAGE, (neue_breite_Lifebar_3_3, neue_hoehe_Lifebar_3_3))
-
-Lifebar_2_3_IMAGE = pygame.image.load("Lifebar 2-3 8.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Lifebar_2_3 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Lifebar_2_3 = screen_height / 30 * screen_width / 1920
-else:
-  neue_breite_Lifebar_2_3 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Lifebar_2_3 = screen_height / 15 * screen_width / 1920
-Lifebar_2_3_IMAGE_Scaled = pygame.transform.scale(Lifebar_2_3_IMAGE, (neue_breite_Lifebar_2_3, neue_hoehe_Lifebar_2_3))
-
-Lifebar_1_3_IMAGE = pygame.image.load("Lifebar 1-3 8.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Lifebar_1_3 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Lifebar_1_3 = screen_height / 30 * screen_width / 1920
-else:
-  neue_breite_Lifebar_1_3 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Lifebar_1_3 = screen_height / 15 * screen_width / 1920
-Lifebar_1_3_IMAGE_Scaled = pygame.transform.scale(Lifebar_1_3_IMAGE, (neue_breite_Lifebar_1_3, neue_hoehe_Lifebar_1_3))
-
-Lifebar_0_3_IMAGE = pygame.image.load("Lifebar 0-3 8.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Lifebar_0_3 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Lifebar_0_3 = screen_height / 30 * screen_width / 1920
-else:
-  neue_breite_Lifebar_0_3 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Lifebar_0_3 = screen_height / 15 * screen_width / 1920
-Lifebar_0_3_IMAGE_Scaled = pygame.transform.scale(Lifebar_0_3_IMAGE, (neue_breite_Lifebar_0_3, neue_hoehe_Lifebar_0_3))
-
-
-# Timebar images
-Timebar_5_5_IMAGE = pygame.image.load("Timebar_5-5.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_5_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_5_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_5_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_5_5 = screen_height / 20 * screen_width / 1920
-Timebar_5_5_IMAGE_Scaled = pygame.transform.scale(Timebar_5_5_IMAGE, (neue_breite_Timebar_5_5, neue_hoehe_Timebar_5_5))
-
-Timebar_4_5_IMAGE = pygame.image.load("Timebar_4-5.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_4_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_4_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_4_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_4_5 = screen_height / 20 * screen_width / 1920
-Timebar_4_5_IMAGE_Scaled = pygame.transform.scale(Timebar_4_5_IMAGE, (neue_breite_Timebar_4_5, neue_hoehe_Timebar_4_5))
-
-Timebar_3_5_IMAGE = pygame.image.load("Timebar_3-5.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_3_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_3_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_3_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_3_5 = screen_height / 20 * screen_width / 1920
-Timebar_3_5_IMAGE_Scaled = pygame.transform.scale(Timebar_3_5_IMAGE, (neue_breite_Timebar_3_5, neue_hoehe_Timebar_3_5))
-
-Timebar_2_5_IMAGE = pygame.image.load("Timebar_2-5.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_2_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_2_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_2_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_2_5 = screen_height / 20 * screen_width / 1920
-Timebar_2_5_IMAGE_Scaled = pygame.transform.scale(Timebar_2_5_IMAGE, (neue_breite_Timebar_2_5, neue_hoehe_Timebar_2_5))
-
-Timebar_1_5_IMAGE = pygame.image.load("Timebar_1-5_2.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_1_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_1_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_1_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_1_5 = screen_height / 20 * screen_width / 1920
-Timebar_1_5_IMAGE_Scaled = pygame.transform.scale(Timebar_1_5_IMAGE, (neue_breite_Timebar_1_5, neue_hoehe_Timebar_1_5))
-
-Timebar_0_5_IMAGE = pygame.image.load("Timebar_0-5_2.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Timebar_0_5 = screen_width / 7 * screen_width / 1920
-  neue_hoehe_Timebar_0_5 = screen_height / 40 * screen_width / 1920
-else:
-  neue_breite_Timebar_0_5 = screen_width / 1.5 * screen_width / 1920
-  neue_hoehe_Timebar_0_5 = screen_height / 20 * screen_width / 1920
-Timebar_0_5_IMAGE_Scaled = pygame.transform.scale(Timebar_0_5_IMAGE, (neue_breite_Timebar_0_5, neue_hoehe_Timebar_0_5))
-
-
-# Powerup images
-Box_bigger_gap_IMAGE = pygame.image.load("Dragonrace_box_bigger_gap.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_box_bigger_gap = screen_width / 20 * screen_width / 1920
-  neue_hoehe_box_bigger_gap = screen_height / 20 * screen_width / 1920
-else:
-  neue_breite_box_bigger_gap = screen_width / 2 * screen_width / 1920
-  neue_hoehe_box_bigger_gap = screen_height / 2 * screen_width / 1920
-Box_bigger_gap_IMAGE_Scaled = pygame.transform.scale(Box_bigger_gap_IMAGE, (neue_breite_box_bigger_gap, neue_hoehe_box_bigger_gap))
-
-Box_life_IMAGE = pygame.image.load("Dragonrace_box_life.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_box_life = screen_width / 20 * screen_width / 1920
-  neue_hoehe_box_life = screen_height / 20 * screen_width / 1920
-else:
-  neue_breite_box_life = screen_width / 2 * screen_width / 1920
-  neue_hoehe_box_life = screen_height / 2 * screen_width / 1920
-Box_life_IMAGE_Scaled = pygame.transform.scale(Box_life_IMAGE, (neue_breite_box_life, neue_hoehe_box_life))
-
-Box_smaller_gap_IMAGE = pygame.image.load("Dragonrace_box_smaller_gap.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_box_smaller_gap = screen_width / 20 * screen_width / 1920
-  neue_hoehe_box_smaller_gap = screen_height / 20 * screen_width / 1920
-else:
-  neue_breite_box_smaller_gap = screen_width / 2 * screen_width / 1920
-  neue_hoehe_box_smaller_gap = screen_height / 2 * screen_width / 1920
-Box_smaller_gap_IMAGE_Scaled = pygame.transform.scale(Box_smaller_gap_IMAGE, (neue_breite_box_smaller_gap, neue_hoehe_box_smaller_gap))
-
-Box_slow_time_IMAGE = pygame.image.load("Dragonrace_box_slow_time.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_box_slow_time = screen_width / 20 * screen_width / 1920
-  neue_hoehe_box_slow_time = screen_height / 20 * screen_width / 1920
-else:
-  neue_breite_box_slow_time = screen_width / 2 * screen_width / 1920
-  neue_hoehe_box_slow_time = screen_height / 2 * screen_width / 1920
-Box_slow_time_IMAGE_Scaled = pygame.transform.scale(Box_slow_time_IMAGE, (neue_breite_box_slow_time, neue_hoehe_box_slow_time))
-
-Box_spikes_IMAGE = pygame.image.load("Dragonrace_box_spikes.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_box_spikes = screen_width / 20 * screen_width / 1920
-  neue_hoehe_box_spikes = screen_height / 20 * screen_width / 1920
-else:
-  neue_breite_box_spikes = screen_width / 2 * screen_width / 1920
-  neue_hoehe_box_spikes = screen_height / 2 * screen_width / 1920
-Box_spikes_IMAGE_Scaled = pygame.transform.scale(Box_spikes_IMAGE, (neue_breite_box_spikes, neue_hoehe_box_spikes))
-
-print("Images_loading_finished")
  
 # Create an object to track the time
 clock = pygame.time.Clock()
@@ -319,8 +112,6 @@ clock = pygame.time.Clock()
 score_background = pygame.Rect(screen_width * 0.1667, screen_height * 0.025, screen_width * 0.6667, screen_height * 0.0625)
 highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, screen_width * 0.7037, screen_height * 0.0833)
 New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
-move_info_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938 * 5.35, screen_width * 0.9444, screen_height * 0.0563)
-storm_info_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938 * 5.35 * 1.1, screen_width * 0.9444, screen_height * 0.0563)
 
 if Player_Monitor == True:
   obstacle_spawn_time = 6000 # Spawns objects every 6 seconds at the start
@@ -329,30 +120,16 @@ else:
 last_obstacle_spawn_time = 0
 
 text_color = (255, 215, 0)
-move_info_text_color = (0, 255, 0)
-storm_info_text_color = (0, 255, 0)
-if Player_Monitor == False:
-    font_score = pygame.font.Font(None, int(screen_area * 0.000032855 * 3 * 0.75))
-    font_highscore = pygame.font.Font(None, int(screen_area * 0.000032855 * 4 * 0.75))
-    font_info = pygame.font.Font(None, int(screen_area * 0.000032855 * 2 * 0.75))
-else:
-    font_score = pygame.font.Font(None, int(screen_area * 0.000032552))
-    font_highscore = pygame.font.Font(None, int(screen_area * 0.000032552))
-    font_info = pygame.font.Font(None, int(screen_area * 0.000032552))    
+font_score = pygame.font.Font(None, int(screen_height * 0.0625))
+font_highscore = pygame.font.Font(None, int(screen_height * 0.0625))
     
-print("Font_finished")
+#print("Font_finished")
 
 obstacle_speed = screen_height * 0.00167
 
 player_x_spawn = screen_width / 2 - screen_width * 0.4259 / 2.5 * 0.95 / 0.75
 player_y_spawn = screen_height * 0.75
 
-start_box_timer = 0
-box_claimed_timer = float("inf")
-if Player_Monitor == True:
-  all_boxes_size = int(screen_width * 0.07407 / 1.6)
-else:
-  all_boxes_size = int(screen_width * 0.07407 * 1.5)
 # Powerup classes
 
 
@@ -441,7 +218,7 @@ Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
-print("Classes_and_Groups_finished")
+#print("Classes_and_Groups_finished")
 
 color_button_restart = (100,255,255)   
 # Light shade of the button 
@@ -453,11 +230,9 @@ color_button_restart_dark = (100,100,100)
 width_button_restart = screen_width * 0.4444 
 height_button_restart = screen_height * 0.6667
  
-if Player_Monitor == False:
-  font_restart_text = pygame.font.Font(None,int(screen_area * 0.000032855 * 4 * 0.75))  
-else:
-  font_restart_text = pygame.font.Font(None,int(screen_area * 0.000032552))   
+font_restart_text = pygame.font.Font(None,int(screen_height * 0.0667))  
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
+
 
 #waiting_for_input = True
 #while waiting_for_input:  # With that the game on the website does not load before you interact with it
@@ -471,7 +246,7 @@ restart_text = font_restart_text.render('Restart', True, color_button_restart)
 #        last_obstacle_spawn_time = pygame.time.get_ticks()
 #        waiting_for_input = False
 
-print("All_set")           
+#print("All_set")           
 run = True
             
 #pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
