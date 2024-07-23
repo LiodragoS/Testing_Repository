@@ -5,12 +5,13 @@ import pygame
 import asyncio
 from pygame.locals import *
  
-# Initiate pygame and giver permissions to use pygames funktions
+# Initiate pygame und Erlaubnis geben um pygame�s Funktionen zu benutzten
 pygame.init()
 
+# Mobile based resulotion: x = 1080; y = 2400
 # Get the screen resolution
 screen_info = pygame.display.Info()
-screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360
+screen_width, screen_height = screen_info.current_w, screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height))
 Player_Monitor = False
 Obstacle_Monitor = False
@@ -22,23 +23,12 @@ if screen_width > screen_height:
 gameDisplay_rect = screen.get_rect()
 pygame.display.set_caption('Dragonrace')
 
-#print("Scaling_finished")
-
 start_ticks = pygame.time.get_ticks()
-paused_ticks = 0
-paused_ticks_single = 0
-waiting_for_input = False
-start_waiting_for_input = False
 
 Player_move = True
 score_allowed = True
 highscore_reset = False
-obstacle_hard_color = False
 
-
-#print("Value_setting_finished")
-
-# Dragon images
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
 if Player_Monitor == True:
   neue_breite = Dragon_IMAGE.get_width() / 5 * screen_width / 2120
@@ -48,26 +38,6 @@ else:
   neue_hoehe = Dragon_IMAGE.get_height() / 2 * screen_width / 2120
 Dragon_IMAGE_Scaled = pygame.transform.scale(Dragon_IMAGE, (neue_breite, neue_hoehe))
 
-Dragon_IMAGE_Left = pygame.image.load('ALPHA Toothless left 5.0.png').convert_alpha()
-if Player_Monitor == True:
-  neue_breite_links = Dragon_IMAGE_Left.get_width() / 5 * screen_width / 2120
-  neue_hoehe_links = Dragon_IMAGE_Left.get_height() / 5 * screen_width / 2120
-else:
-  neue_breite_links = Dragon_IMAGE_Left.get_width() / 2 * screen_width / 2120
-  neue_hoehe_links = Dragon_IMAGE_Left.get_height() / 2 * screen_width / 2120
-Dragon_IMAGE_Scaled_Left = pygame.transform.scale(Dragon_IMAGE_Left, (neue_breite_links, neue_hoehe_links))
-
-Dragon_IMAGE_Right = pygame.image.load('ALPHA Toothless right 5.0.png').convert_alpha()
-if Player_Monitor == True:
-  neue_breite_rechts = Dragon_IMAGE_Right.get_width() / 5 * screen_width / 2120
-  neue_hoehe_rechts = Dragon_IMAGE_Right.get_height() / 5 * screen_width / 2120
-else:
-  neue_breite_rechts = Dragon_IMAGE_Right.get_width() / 2 * screen_width / 2120
-  neue_hoehe_rechts = Dragon_IMAGE_Right.get_height() / 2 * screen_width / 2120
-Dragon_IMAGE_Scaled_Right = pygame.transform.scale(Dragon_IMAGE_Right, (neue_breite_rechts, neue_hoehe_rechts))
-
-
-# Jungle images
 Jungle_IMAGE = pygame.image.load("HFW Dragonrace_Mobile.png").convert_alpha()
 if Jungle_IMAGE_Monitor == True:
   neue_breite_Jungle = screen_width
@@ -76,37 +46,8 @@ else:
   neue_breite_Jungle = screen_width * 4
   neue_hoehe_Jungle = screen_height
 Jungle_IMAGE_Scaled = pygame.transform.scale(Jungle_IMAGE, (neue_breite_Jungle, neue_hoehe_Jungle))
-
-Jungle_IMAGE_rain = pygame.image.load("HFW Dragonrace_Mobile_rain.png").convert_alpha()
-if Jungle_IMAGE_Monitor == True:
-  neue_breite_Jungle_rain = screen_width
-  neue_hoehe_Jungle_rain = screen_height
-else:
-  neue_breite_Jungle_rain = screen_width * 4
-  neue_hoehe_Jungle_rain = screen_height
-Jungle_IMAGE_Scaled_rain = pygame.transform.scale(Jungle_IMAGE_rain, (neue_breite_Jungle_rain, neue_hoehe_Jungle_rain))
-
-
-# Cloud images
-Cloud_IMAGE = pygame.image.load("Dragonrace normal cloud 6.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Cloud = screen_width
-  neue_hoehe_Cloud = screen_height
-else:
-  neue_breite_Cloud = screen_width
-  neue_hoehe_Cloud = screen_height
-Cloud_IMAGE_Scaled = pygame.transform.scale(Cloud_IMAGE, (neue_breite_Cloud, neue_hoehe_Cloud))
-
-Red_Cloud_IMAGE = pygame.image.load("Dragonrace red cloud 6.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_red_Cloud = screen_width
-  neue_hoehe_red_Cloud = screen_height
-else:
-  neue_breite_red_Cloud = screen_width
-  neue_hoehe_red_Cloud = screen_height
-Red_Cloud_IMAGE_Scaled = pygame.transform.scale(Red_Cloud_IMAGE, (neue_breite_red_Cloud, neue_hoehe_red_Cloud))
  
-# Create an object to track the time
+# Eine neues Uhr Objekt erstellen um die Zeit zu tracken
 clock = pygame.time.Clock()
 
 score_background = pygame.Rect(screen_width * 0.1667, screen_height * 0.025, screen_width * 0.6667, screen_height * 0.0625)
@@ -114,35 +55,29 @@ highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, s
 New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
 
 if Player_Monitor == True:
-  obstacle_spawn_time = 6000 # Spawns objects every 6 seconds at the start
+  obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 10 Sekunden
 else:
- obstacle_spawn_time = 6000  # Spawns objects every 6 seconds at the start
+ obstacle_spawn_time = 4000  # Spawnt Objekte am Anfang alle 4 Sekunden
 last_obstacle_spawn_time = 0
 
 text_color = (255, 215, 0)
 font_score = pygame.font.Font(None, int(screen_height * 0.0625))
 font_highscore = pygame.font.Font(None, int(screen_height * 0.0625))
-    
-#print("Font_finished")
 
 obstacle_speed = screen_height * 0.00167
 
-player_x_spawn = screen_width / 2 - screen_width * 0.4259 / 2.5 * 0.95 / 0.75
+player_x_spawn = screen_width * 0.2870
 player_y_spawn = screen_height * 0.75
-
-# Powerup classes
-
-
   
 class player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
         if Player_Monitor == True:
-          self.image = pygame.Surface((screen_width * 0.4259 / 2.5 * 0.95, screen_height * 0.05 * 1.3))
-          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 / 2.5 * 0.95, screen_height * 0.05 * 1.3)  
+          self.image = pygame.Surface((screen_width * 0.4259 / 2.5, screen_height * 0.05))
+          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 / 2.5, screen_height * 0.05)  
         else:
-          self.image = pygame.Surface((screen_width * 0.4259 * 0.95, screen_height * 0.05 * 1.3))
-          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 * 0.95, screen_height * 0.05 * 1.3)
+          self.image = pygame.Surface((screen_width * 0.4259, screen_height * 0.05))
+          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259, screen_height * 0.05)
         self.image.fill(255)
         self.dragging = False
         
@@ -162,7 +97,7 @@ class player(pygame.sprite.Sprite):
         if self.dragging:
           mouse_x, mouse_y = pos
           self.rect.x = mouse_x + self.offset_x
-          self.rect.y = mouse_y + self.offset_y 
+          self.rect.y = mouse_y + self.offset_y   
 
     def clamp_ip(self, rect):
         self.rect.clamp_ip(rect)
@@ -176,13 +111,9 @@ Player = player()
 class Obstacle_Left(pygame.sprite.Sprite):
     def __init__(self, width_obstacle_left):
         super().__init__() 
-        self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left - screen_width * 0.4259 / 2.5 * 0.05, screen_height * 0.0833) 
-        if obstacle_hard_color == False:
-          self.image = Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_left, screen_height * 0.0833))  # Scale image
-        else:
-          self.image = Red_Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_left, screen_height * 0.0833))  # Scale image
+        self.image = pygame.Surface((width_obstacle_left, screen_height * 0.0833))
+        self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left, screen_height * 0.0833) 
+        self.image.fill((208,204,204))
         
     def update(self):
         self.rect.y += obstacle_speed
@@ -192,18 +123,13 @@ class Obstacle_Left(pygame.sprite.Sprite):
     def obstacle_left_kill(self):
         self.kill()
 
-
 class Obstacle_Right(pygame.sprite.Sprite):
     def __init__(self, width_obstacle_right):
         super().__init__()
         width_obstacle_right_spawn = screen_width - width_obstacle_right
+        self.image = pygame.Surface((width_obstacle_right, screen_height * 0.0833))
         self.rect = Rect((width_obstacle_right_spawn, -screen_height * 0.0833, width_obstacle_right, screen_height * 0.0833)) 
-        if obstacle_hard_color == False:
-          self.image = Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_right, screen_height * 0.0833))  # Scale image
-        else:
-          self.image = Red_Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_right, screen_height * 0.0833))  # Scale image
+        self.image.fill((208,204,204))
 
     def update(self):
         self.rect.y += obstacle_speed
@@ -212,45 +138,26 @@ class Obstacle_Right(pygame.sprite.Sprite):
             
     def obstacle_right_kill(self):
         self.kill()
-        
+            
 all_sprites = pygame.sprite.Group(Player)
 Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
-#print("Classes_and_Groups_finished")
-
 color_button_restart = (100,255,255)   
-# Light shade of the button 
+# light shade of the button 
 color_button_restart_light = (170,170,170)   
-# Dark shade of the button 
+# dark shade of the button 
 color_button_restart_dark = (100,100,100) 
 
-# Position of the buttons
+# Position der button
 width_button_restart = screen_width * 0.4444 
 height_button_restart = screen_height * 0.6667
- 
+  
 font_restart_text = pygame.font.Font(None,int(screen_height * 0.0667))  
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
 
-
-#waiting_for_input = True
-#while waiting_for_input:  # With that the game on the website does not load before you interact with it
-#    for event in pygame.event.get():
-#        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP or event.type == pygame.MOUSEBUTTONDOWN or event.type == pygame.MOUSEBUTTONUP: 
-#            start_ticks = pygame.time.get_ticks()
-#            last_obstacle_spawn_time = pygame.time.get_ticks()
-#            waiting_for_input = False
-#    if pygame.time.get_ticks() > 5000: 
-#        start_ticks = pygame.time.get_ticks()
-#        last_obstacle_spawn_time = pygame.time.get_ticks()
-#        waiting_for_input = False
-
-#print("All_set")           
 run = True
-            
-#pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
-#pygame.mixer.music.play(-1)
 
 async def main():
     global run
