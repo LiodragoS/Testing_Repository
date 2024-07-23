@@ -10,7 +10,7 @@ pygame.init()
 
 # Get the screen resolution
 screen_info = pygame.display.Info()
-screen_width, screen_height = screen_info.current_w, screen_info.current_h # To get HD resolution on FullHD screen: screen_info.current_w - 640, screen_info.current_h - 360
+screen_width, screen_height = screen_info.current_w, screen_info.current_h
 screen = pygame.display.set_mode((screen_width, screen_height))
 Player_Monitor = False
 Obstacle_Monitor = False
@@ -50,34 +50,6 @@ else:
   neue_hoehe_Jungle = screen_height
 Jungle_IMAGE_Scaled = pygame.transform.scale(Jungle_IMAGE, (neue_breite_Jungle, neue_hoehe_Jungle))
 
-Jungle_IMAGE_rain = pygame.image.load("HFW Dragonrace_Mobile_rain.png").convert_alpha()
-if Jungle_IMAGE_Monitor == True:
-  neue_breite_Jungle_rain = screen_width
-  neue_hoehe_Jungle_rain = screen_height
-else:
-  neue_breite_Jungle_rain = screen_width * 4
-  neue_hoehe_Jungle_rain = screen_height
-Jungle_IMAGE_Scaled_rain = pygame.transform.scale(Jungle_IMAGE_rain, (neue_breite_Jungle_rain, neue_hoehe_Jungle_rain))
-
-
-# Cloud images
-Cloud_IMAGE = pygame.image.load("Dragonrace normal cloud 6.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_Cloud = screen_width
-  neue_hoehe_Cloud = screen_height
-else:
-  neue_breite_Cloud = screen_width
-  neue_hoehe_Cloud = screen_height
-Cloud_IMAGE_Scaled = pygame.transform.scale(Cloud_IMAGE, (neue_breite_Cloud, neue_hoehe_Cloud))
-
-Red_Cloud_IMAGE = pygame.image.load("Dragonrace red cloud 6.0.png").convert_alpha()
-if Player_Monitor == True:
-  neue_breite_red_Cloud = screen_width
-  neue_hoehe_red_Cloud = screen_height
-else:
-  neue_breite_red_Cloud = screen_width
-  neue_hoehe_red_Cloud = screen_height
-Red_Cloud_IMAGE_Scaled = pygame.transform.scale(Red_Cloud_IMAGE, (neue_breite_red_Cloud, neue_hoehe_red_Cloud))
  
 # Create an object to track the time
 clock = pygame.time.Clock()
@@ -147,13 +119,10 @@ Player = player()
 class Obstacle_Left(pygame.sprite.Sprite):
     def __init__(self, width_obstacle_left):
         super().__init__() 
-        self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left - screen_width * 0.4259 / 2.5 * 0.05, screen_height * 0.0833) 
-        if obstacle_hard_color == False:
-          self.image = Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_left, screen_height * 0.0833))  # Scale image
-        else:
-          self.image = Red_Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_left, screen_height * 0.0833))  # Scale image
+        self.image = pygame.Surface((width_obstacle_left, screen_height * 0.0833))
+        self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left, screen_height * 0.0833) 
+        self.image.fill((208,204,204))
+        
         
     def update(self):
         self.rect.y += obstacle_speed
@@ -168,13 +137,10 @@ class Obstacle_Right(pygame.sprite.Sprite):
     def __init__(self, width_obstacle_right):
         super().__init__()
         width_obstacle_right_spawn = screen_width - width_obstacle_right
+        self.image = pygame.Surface((width_obstacle_right, screen_height * 0.0833))
         self.rect = Rect((width_obstacle_right_spawn, -screen_height * 0.0833, width_obstacle_right, screen_height * 0.0833)) 
-        if obstacle_hard_color == False:
-          self.image = Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_right, screen_height * 0.0833))  # Scale image
-        else:
-          self.image = Red_Cloud_IMAGE_Scaled
-          self.image = pygame.transform.scale(self.image, (width_obstacle_right, screen_height * 0.0833))  # Scale image
+        self.image.fill((208,204,204))
+      
 
     def update(self):
         self.rect.y += obstacle_speed
