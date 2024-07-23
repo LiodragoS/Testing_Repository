@@ -7,6 +7,7 @@ from pygame.locals import *
  
 # Initiate pygame and giver permissions to use pygames funktions
 pygame.init()
+print("Game_started")
 
 # Mobile based resulotion: x = 1080; y = 2400
 # Blit options:
@@ -53,6 +54,7 @@ def scale_image(base_image, base_resolution_image, current_resolution, manual_sc
     new_height = int(base_image.get_height() * height_ratio * manual_scale)
     return pygame.transform.scale(base_image, (new_width, new_height))
 
+print("Scaling_finished")
 
 start_ticks = pygame.time.get_ticks()
 paused_ticks = 0
@@ -103,6 +105,8 @@ Dragon_IMAGE_Scaled_allowed = True
 Dragon_IMAGE_Scaled_Left_allowed = True
 Dragon_IMAGE_Scaled_Right_allowed = True
 prev_x = 0
+
+print("Value_setting_finished")
 
 # Dragon images
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
@@ -267,6 +271,7 @@ Box_spikes_IMAGE = pygame.image.load("Dragonrace_box_spikes.png")
 manual_scale = 1
 Box_spikes_IMAGE_Scaled = scale_image(Box_spikes_IMAGE, base_resolution_image, current_resolution, manual_scale)
 
+print("Images_loading_finished")
  
 # Create an object to track the time
 clock = pygame.time.Clock()
@@ -309,7 +314,9 @@ else:
 
     base_font_size_info = 60
     scaled_font_size_info = get_font_size(base_font_size_info, base_resolution, current_resolution)
-    font_info = pygame.font.SysFont(None, scaled_font_size_info)   
+    font_info = pygame.font.SysFont(None, scaled_font_size_info)  
+    
+print("Font_finished")
 
 obstacle_speed = screen_height * 0.00167
 
@@ -556,6 +563,8 @@ Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
+print("Classes_and_Groups_finished")
+
 color_button_restart = (100,255,255)   
 # Light shade of the button 
 color_button_restart_light = (170,170,170)   
@@ -587,7 +596,8 @@ restart_text = font_restart_text.render('Restart', True, color_button_restart)
 #        start_ticks = pygame.time.get_ticks()
 #        last_obstacle_spawn_time = pygame.time.get_ticks()
 #        waiting_for_input = False
-            
+
+print("All_set")           
 run = True
             
 #pygame.mixer.music.load("Dragonrace Normal 2.0.mp3")
@@ -674,7 +684,7 @@ async def main():
         #            paused_ticks_single = pygame.time.get_ticks() - pause_start
         #           last_obstacle_spawn_time = last_obstacle_spawn_time + paused_ticks_single
         #            waiting_for_input = False
-        #print("After_waiting_for_input")
+        print("After_waiting_for_input")
         
         if score_allowed == True:
           score = (pygame.time.get_ticks() - start_ticks - paused_ticks) // 1000    
@@ -727,7 +737,7 @@ async def main():
             obstacles_left.add(obstacle_left)
             obstacles_right.add(obstacle_right)
             
-            #print("New_obstacle_loaded")
+            print("New_obstacle_loaded")
             
             if Player_Monitor == True:
               obstacle_spawn_time = obstacle_spawn_time - 140 # Objects spawn faster after spawning
@@ -1317,7 +1327,7 @@ async def main():
         #print(pygame.time.get_ticks() - Lifebar_timer)
         #print(first_hit)
         #print(Lifebar_time)
-        #print("Fully_loaded")
+        print("Fully_loaded")
         # Updating the display surface
         pygame.display.update()
         await asyncio.sleep(0)
