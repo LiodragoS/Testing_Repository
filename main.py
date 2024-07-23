@@ -5,7 +5,7 @@ import pygame
 import asyncio
 from pygame.locals import *
  
-# Initiate pygame and giver permissions to use pygames funktions
+# Initiate pygame und Erlaubnis geben um pygame�s Funktionen zu benutzten
 pygame.init()
 
 # Mobile based resulotion: x = 1080; y = 2400
@@ -46,8 +46,8 @@ else:
   neue_breite_Jungle = screen_width * 4
   neue_hoehe_Jungle = screen_height
 Jungle_IMAGE_Scaled = pygame.transform.scale(Jungle_IMAGE, (neue_breite_Jungle, neue_hoehe_Jungle))
-
-# Create an object to track the time
+ 
+# Eine neues Uhr Objekt erstellen um die Zeit zu tracken
 clock = pygame.time.Clock()
 
 score_background = pygame.Rect(screen_width * 0.1667, screen_height * 0.025, screen_width * 0.6667, screen_height * 0.0625)
@@ -55,15 +55,15 @@ highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, s
 New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
 
 if Player_Monitor == True:
-  obstacle_spawn_time = 10000 # Spawns objects every 6 seconds at the start
+  obstacle_spawn_time = 10000 # Spawnt Objekte am Anfang alle 10 Sekunden
 else:
- obstacle_spawn_time = 4000  # Spawns objects every 6 seconds at the start
+ obstacle_spawn_time = 4000  # Spawnt Objekte am Anfang alle 4 Sekunden
 last_obstacle_spawn_time = 0
 
 text_color = (255, 215, 0)
 font_score = pygame.font.Font(None, int(screen_height * 0.0625))
 font_highscore = pygame.font.Font(None, int(screen_height * 0.0625))
-    
+
 obstacle_speed = screen_height * 0.00167
 
 player_x_spawn = screen_width * 0.2870
@@ -97,7 +97,7 @@ class player(pygame.sprite.Sprite):
         if self.dragging:
           mouse_x, mouse_y = pos
           self.rect.x = mouse_x + self.offset_x
-          self.rect.y = mouse_y + self.offset_y 
+          self.rect.y = mouse_y + self.offset_y   
 
     def clamp_ip(self, rect):
         self.rect.clamp_ip(rect)
@@ -113,7 +113,7 @@ class Obstacle_Left(pygame.sprite.Sprite):
         super().__init__() 
         self.image = pygame.Surface((width_obstacle_left, screen_height * 0.0833))
         self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left, screen_height * 0.0833) 
-        self.image.fill((208,204,204))    
+        self.image.fill((208,204,204))
         
     def update(self):
         self.rect.y += obstacle_speed
@@ -130,7 +130,7 @@ class Obstacle_Right(pygame.sprite.Sprite):
         self.image = pygame.Surface((width_obstacle_right, screen_height * 0.0833))
         self.rect = Rect((width_obstacle_right_spawn, -screen_height * 0.0833, width_obstacle_right, screen_height * 0.0833)) 
         self.image.fill((208,204,204))
-      
+
     def update(self):
         self.rect.y += obstacle_speed
         if self.rect.top > screen_height:
@@ -138,25 +138,25 @@ class Obstacle_Right(pygame.sprite.Sprite):
             
     def obstacle_right_kill(self):
         self.kill()
-        
+            
 all_sprites = pygame.sprite.Group(Player)
 Obstacles = pygame.sprite.Group()
 obstacles_left = pygame.sprite.Group()
 obstacles_right = pygame.sprite.Group()
 
 color_button_restart = (100,255,255)   
-# Light shade of the button 
+# light shade of the button 
 color_button_restart_light = (170,170,170)   
-# Dark shade of the button 
+# dark shade of the button 
 color_button_restart_dark = (100,100,100) 
 
-# Position of the buttons
+# Position der button
 width_button_restart = screen_width * 0.4444 
 height_button_restart = screen_height * 0.6667
- 
+  
 font_restart_text = pygame.font.Font(None,int(screen_height * 0.0667))  
 restart_text = font_restart_text.render('Restart', True, color_button_restart) 
-          
+
 run = True
 
 async def main():
