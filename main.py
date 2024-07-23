@@ -7,19 +7,6 @@ from pygame.locals import *
  
 # Initiate pygame and giver permissions to use pygames funktions
 pygame.init()
-print("Game_started")
-
-# Mobile based resulotion: x = 1080; y = 2400
-# Blit options:
-# topleft: Die obere linke Ecke des Rechtecks.
-# topright: Die obere rechte Ecke des Rechtecks.
-# bottomleft: Die untere linke Ecke des Rechtecks.
-# bottomright: Die untere rechte Ecke des Rechtecks.
-# midtop: Die Mitte der oberen Kante des Rechtecks.
-# midbottom: Die Mitte der unteren Kante des Rechtecks.
-# midleft: Die Mitte der linken Kante des Rechtecks.
-# midright: Die Mitte der rechten Kante des Rechtecks.
-# center: Das Zentrum des Rechtecks.
 
 # Get the screen resolution
 screen_info = pygame.display.Info()
@@ -78,15 +65,12 @@ Lifebar_time = 500
 Lifebar_activation_time = True
 Lifebar_timer_check = True
 Lifebar_timer = 0
-random_box_timer = random.randrange(25000, 40000, 1000)
 
-#Normal_Background_Sound = pygame.mixer.Sound("Dragonrace Normal 2.0.mp3")
-#Thunder_Background_Sound = pygame.mixer.Sound("Dragonrace Thunder 2.0.mp3")
 
 Dragon_IMAGE_Scaled_allowed = True
 Dragon_IMAGE_Scaled_Left_allowed = True
 Dragon_IMAGE_Scaled_Right_allowed = True
-prev_x = 0
+
 
 print("Value_setting_finished")
 
@@ -370,148 +354,6 @@ if Player_Monitor == True:
 else:
   all_boxes_size = int(screen_width * 0.07407 * 1.5)
 # Powerup classes
-class Life_box(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.x = random.randrange(0, screen_width - all_boxes_size)
-        self.y = -all_boxes_size
-        self.size = all_boxes_size
-        self.rect = Rect(self.x, self.y, self.size, self.size)
-        self.speed = obstacle_speed * 4
-        self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
-        self.image = Box_life_IMAGE_Scaled
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
-
-    def update(self):
-        self.rect.x += self.direction_x * self.speed
-        self.rect.y += self.direction_y * self.speed
-
-        # Check for collision with the left or right wall
-        if self.rect.x <= 0 or self.rect.x >= screen_width - self.size:
-            self.direction_x *= -1
-            
-        if self.rect.top > screen_height:
-            self.kill()
-            
-    def Life_box_pause(self):
-      self.speed = 0
-
-           
-        
-class Bigger_gap_box(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.x = random.randrange(0, screen_width - all_boxes_size)
-        self.y = -all_boxes_size
-        self.size = all_boxes_size
-        self.rect = Rect(self.x, self.y, self.size, self.size)
-        self.speed = obstacle_speed * 4
-        self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
-        self.image = Box_bigger_gap_IMAGE_Scaled
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
-
-    def update(self):
-        self.rect.x += self.direction_x * self.speed
-        self.rect.y += self.direction_y * self.speed
-
-        # Check for collision with the left or right wall
-        if self.rect.x <= 0 or self.rect.x >= screen_width - self.size:
-            self.direction_x *= -1
-            
-        if self.rect.top > screen_height:
-            self.kill()
-
-    def Bigger_gap_box_pause(self):
-        self.speed = 0
-
-        
-
-class Smaller_gap_box(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.x = random.randrange(0, screen_width - all_boxes_size)
-        self.y = -all_boxes_size
-        self.size = all_boxes_size
-        self.rect = Rect(self.x, self.y, self.size, self.size)
-        self.speed = obstacle_speed * 4
-        self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
-        self.image = Box_smaller_gap_IMAGE_Scaled
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
-
-    def update(self):
-        self.rect.x += self.direction_x * self.speed
-        self.rect.y += self.direction_y * self.speed
-
-        # Check for collision with the left or right wall
-        if self.rect.x <= 0 or self.rect.x >= screen_width - self.size:
-            self.direction_x *= -1
-            
-        if self.rect.top > screen_height:
-            self.kill()
-
-    def Smaller_gap_box_pause(self):
-        self.speed = 0
-
-        
-
-class Slow_time_box(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.x = random.randrange(0, screen_width - all_boxes_size)
-        self.y = -all_boxes_size
-        self.size = all_boxes_size
-        self.rect = Rect(self.x, self.y, self.size, self.size)
-        self.speed = obstacle_speed * 4
-        self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
-        self.image = Box_slow_time_IMAGE_Scaled
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
-
-    def update(self):
-        self.rect.x += self.direction_x * self.speed
-        self.rect.y += self.direction_y * self.speed
-
-        # Check for collision with the left or right wall
-        if self.rect.x <= 0 or self.rect.x >= screen_width - self.size:
-            self.direction_x *= -1
-            
-        if self.rect.top > screen_height:
-            self.kill()
-
-    def Slow_time_box_pause(self):
-        self.speed = 0
-
-        
-
-class Spikes_box(pygame.sprite.Sprite):
-    def __init__(self):
-        super().__init__()
-        self.x = random.randrange(0, screen_width - all_boxes_size)
-        self.y = -all_boxes_size
-        self.size = all_boxes_size
-        self.rect = Rect(self.x, self.y, self.size, self.size)
-        self.speed = obstacle_speed * 4
-        self.direction_x = random.choice([-1, 1])
-        self.direction_y = 0.35
-        self.image = Box_spikes_IMAGE_Scaled
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # Scale image
-
-    def update(self):
-        self.rect.x += self.direction_x * self.speed
-        self.rect.y += self.direction_y * self.speed
-
-        # Check for collision with the left or right wall
-        if self.rect.x <= 0 or self.rect.x >= screen_width - self.size:
-            self.direction_x *= -1
-            
-        if self.rect.top > screen_height:
-            self.kill()
-
-    def Spikes_box_pause(self):
-        self.speed = 0
 
 
   
@@ -593,13 +435,6 @@ class Obstacle_Right(pygame.sprite.Sprite):
             
     def obstacle_right_kill(self):
         self.kill()
-
-
-life_box_group = pygame.sprite.Group()
-smaller_gap_box_group = pygame.sprite.Group()
-bigger_gap_box_group = pygame.sprite.Group()
-slow_time_box_group = pygame.sprite.Group()
-spikes_box_group = pygame.sprite.Group()
         
 all_sprites = pygame.sprite.Group(Player)
 Obstacles = pygame.sprite.Group()
