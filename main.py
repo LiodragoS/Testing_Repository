@@ -8,6 +8,7 @@ from pygame.locals import *
 # Initiate pygame and giver permissions to use pygames funktions
 pygame.init()
 
+# Mobile based resulotion: x = 1080; y = 2400
 # Get the screen resolution
 screen_info = pygame.display.Info()
 screen_width, screen_height = screen_info.current_w, screen_info.current_h
@@ -27,9 +28,7 @@ start_ticks = pygame.time.get_ticks()
 Player_move = True
 score_allowed = True
 highscore_reset = False
-obstacle_hard_color = False
 
-# Dragon images
 Dragon_IMAGE = pygame.image.load('ALPHA Toothless 10.0.png').convert_alpha()
 if Player_Monitor == True:
   neue_breite = Dragon_IMAGE.get_width() / 5 * screen_width / 2120
@@ -39,8 +38,6 @@ else:
   neue_hoehe = Dragon_IMAGE.get_height() / 2 * screen_width / 2120
 Dragon_IMAGE_Scaled = pygame.transform.scale(Dragon_IMAGE, (neue_breite, neue_hoehe))
 
-
-# Jungle images
 Jungle_IMAGE = pygame.image.load("HFW Dragonrace_Mobile.png").convert_alpha()
 if Jungle_IMAGE_Monitor == True:
   neue_breite_Jungle = screen_width
@@ -50,7 +47,6 @@ else:
   neue_hoehe_Jungle = screen_height
 Jungle_IMAGE_Scaled = pygame.transform.scale(Jungle_IMAGE, (neue_breite_Jungle, neue_hoehe_Jungle))
 
- 
 # Create an object to track the time
 clock = pygame.time.Clock()
 
@@ -59,33 +55,29 @@ highscore_background = pygame.Rect(screen_width * 0.1481, screen_height * 0.5, s
 New_personal_best_background = pygame.Rect(screen_width * 0.0278, screen_height * 0.0938, screen_width * 0.9444, screen_height * 0.0563)
 
 if Player_Monitor == True:
-  obstacle_spawn_time = 6000 # Spawns objects every 6 seconds at the start
+  obstacle_spawn_time = 10000 # Spawns objects every 6 seconds at the start
 else:
- obstacle_spawn_time = 6000  # Spawns objects every 6 seconds at the start
+ obstacle_spawn_time = 4000  # Spawns objects every 6 seconds at the start
 last_obstacle_spawn_time = 0
 
 text_color = (255, 215, 0)
 font_score = pygame.font.Font(None, int(screen_height * 0.0625))
 font_highscore = pygame.font.Font(None, int(screen_height * 0.0625))
     
-
 obstacle_speed = screen_height * 0.00167
 
 player_x_spawn = screen_width * 0.2870
 player_y_spawn = screen_height * 0.75
-
-
-
   
 class player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
         if Player_Monitor == True:
-          self.image = pygame.Surface((screen_width * 0.4259 / 2.5 * 0.95, screen_height * 0.05 * 1.3))
-          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 / 2.5 * 0.95, screen_height * 0.05 * 1.3)  
+          self.image = pygame.Surface((screen_width * 0.4259 / 2.5, screen_height * 0.05))
+          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 / 2.5, screen_height * 0.05)  
         else:
-          self.image = pygame.Surface((screen_width * 0.4259 * 0.95, screen_height * 0.05 * 1.3))
-          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259 * 0.95, screen_height * 0.05 * 1.3)
+          self.image = pygame.Surface((screen_width * 0.4259, screen_height * 0.05))
+          self.rect = Rect(player_x_spawn, player_y_spawn, screen_width * 0.4259, screen_height * 0.05)
         self.image.fill(255)
         self.dragging = False
         
@@ -121,8 +113,7 @@ class Obstacle_Left(pygame.sprite.Sprite):
         super().__init__() 
         self.image = pygame.Surface((width_obstacle_left, screen_height * 0.0833))
         self.rect = Rect(0, -screen_height * 0.0833, width_obstacle_left, screen_height * 0.0833) 
-        self.image.fill((208,204,204))
-        
+        self.image.fill((208,204,204))    
         
     def update(self):
         self.rect.y += obstacle_speed
@@ -132,7 +123,6 @@ class Obstacle_Left(pygame.sprite.Sprite):
     def obstacle_left_kill(self):
         self.kill()
 
-
 class Obstacle_Right(pygame.sprite.Sprite):
     def __init__(self, width_obstacle_right):
         super().__init__()
@@ -141,7 +131,6 @@ class Obstacle_Right(pygame.sprite.Sprite):
         self.rect = Rect((width_obstacle_right_spawn, -screen_height * 0.0833, width_obstacle_right, screen_height * 0.0833)) 
         self.image.fill((208,204,204))
       
-
     def update(self):
         self.rect.y += obstacle_speed
         if self.rect.top > screen_height:
