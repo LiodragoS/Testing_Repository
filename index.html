@@ -285,7 +285,7 @@ config = {
         #fullscreenButton:hover {
             background-color: #45a049;
         }
-        
+       
         #status {
             display: inline-block;
             vertical-align: top;
@@ -331,9 +331,9 @@ config = {
         }
 
         .topright{
-            position:absolute;
-            top:0px;
-            right:0px;
+           position:absolute;
+           top:0px;
+           right:0px;
         }
 
         .bottomright {
@@ -349,47 +349,21 @@ config = {
         }
 
         .trinfo{
-            position:relative;
-            right:0px;
-            border: 1px solid black;
+           position:relative;
+           right:0px;
+           border: 1px solid black;
         }
 
         .framed{
-            position:relative;
-            top:150px;
-            right:10px;
-            border: 1px solid black;
+           position:relative;
+           top:150px;
+           right:10px;
+           border: 1px solid black;
         }
         
     </style>
 
     <script src="https://pygame-web.github.io/archives/0.9//browserfs.min.js"></script>
-
-    <script>
-    let isPaused = false;
-
-    function pauseGame() {
-        isPaused = true;
-        document.getElementById('status').textContent = 'Spiel ist pausiert';
-        waiting_for_input = True
-        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
-    }
-
-    function resumeGame() {
-        isPaused = false;
-        document.getElementById('status').textContent = 'Spiel läuft';
-        waiting_for_input = False
-        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
-    }
-
-    window.addEventListener('blur', function() {
-        pauseGame();
-    });
-
-    window.addEventListener('focus', function() {
-        resumeGame();
-    });
-    </script>
 
 </head>
 
@@ -428,7 +402,7 @@ height="1px"
                 <div id=load_min>min</div>
                 <div id=load_avg>avg</div>
                 <div id=load_max>max</div>
-                <button id="load_rst" disabled>RESET</button>
+              <button id="load_rst" disabled>RESET</button>
             </div>
 
             <div id="level">(battery level unknown)</div>
@@ -569,6 +543,30 @@ frameborder="1"
 
     // Event-Listener für den Button
     document.getElementById("fullscreenButton").addEventListener("click", toggleFullscreen);
+
+    let isPaused = false;
+
+    function pauseGame() {
+        isPaused = true;
+        document.getElementById('status').textContent = 'Spiel ist pausiert';
+        waiting_for_input = true
+        // Weitere Logik zum Pausieren des Spiels hier hinzufügen
+    }
+
+    function resumeGame() {
+        isPaused = false;
+        document.getElementById('status').textContent = 'Spiel läuft';
+        waiting_for_input = false
+        // Weitere Logik zum Fortsetzen des Spiels hier hinzufügen
+    }
+
+    window.addEventListener('blur', function() {
+        pauseGame();
+    });
+
+    window.addEventListener('focus', function() {
+        resumeGame();
+    });
 
     </script>
 
